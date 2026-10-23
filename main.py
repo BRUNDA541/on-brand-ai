@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 app = FastAPI(title="ON-BRAND AI")
 app.add_middleware(
     CORSMiddleware,
@@ -12,11 +13,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {
-        "project": "ON-BRAND AI",
-        "message": "Welcome! Your brand review assistant is running.",
-        "status": "working"
-    }
+    return FileResponse("index.html")
 
 
 @app.get("/health")
