@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#6954B8">
+<title>ON-BRAND AI | Trust Every Claim</title>
+
+<style>
+:root {
+  --navy: #282343;
+  --purple: #6954B8;
+  --purple-dark: #443474;
+  --panel: #FFFFFF;
+  --panel2: #F5F2FF;
+  --text: #30264F;
+  --muted: #625875;
+  --line: #DCD3F4;
+  --amber: #805000;
+  --green: #146544;
+  --red: #A51F32;
+  --shadow: 0 8px 28px rgba(77,58,137,.09);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(135deg, #F5F2FF, #FBFAFF 52%, #EEE8FF);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+button, textarea, select, input { font: inherit; }
+button { cursor: pointer; }
+
+button:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid #B6A5F5;
+  outline-offset: 3px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 6%;
+  border-bottom: 1px solid var(--line);
+  background: rgba(255,255,255,.94);
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+
+.logo {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 25px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #B6A5F5, #6954B8 65%, #443474);
+  box-shadow: 0 5px 18px rgba(105,84,184,.22);
+}
+
+.brand-name { font-size: 19px; font-weight: 800; letter-spacing: 1.2px; }
+.brand-sub { color: var(--muted); font-size: 12px; margin-top: 5px; }
+
+.header-status {
+  color: var(--green);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #BFE5D3;
+  background: #F0FAF5;
+  padding: 10px 14px;
+  border-radius: 30px;
+}
+
+main { max-width: 1180px; margin: auto; padding: 36px 22px 55px; }
+
+.eyebrow {
+  color: var(--purple);
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr .6fr;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 28px;
+}
+
+h1 {
+  font-size: clamp(34px, 4.5vw, 52px);
+  line-height: 1.15;
+  margin: 14px 0;
+  letter-spacing: -1.3px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #443474, #8068D0, #A08BE9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  color: var(--muted);
+  line-height: 1.85;
+  max-width: 650px;
+  font-size: 16px;
+  margin: 0;
+}
+
+.hero-note {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  background: linear-gradient(145deg, #FFFFFF, #F5F2FF);
+  box-shadow: var(--shadow);
+}
+
+.hero-note .big { font-size: 30px; margin-bottom: 9px; color: var(--purple); }
+.hero-note p { color: var(--muted); font-size: 14px; line-height: 1.8; margin-bottom: 0; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin: 25px 0;
+}
+
+.stat, .card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.stat { padding: 20px; min-width: 0; }
+.stat-label { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.stat-number { font-size: 32px; font-weight: 800; margin: 9px 0 5px; color: var(--navy); }
+.stat-foot { color: var(--muted); font-size: 12px; line-height: 1.6; }
+.workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.card { padding: 25px; min-width: 0; }
+
+.card-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+h2 { font-size: 22px; line-height: 1.4; margin: 0; color: var(--navy); }
+h3 { font-size: 17px; line-height: 1.5; margin: 0; color: var(--navy); }
+
+.description {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.85;
+  margin: 10px 0 20px;
+}
+
+.pill {
+  color: var(--purple-dark);
+  background: var(--panel2);
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 7px 10px;
+  font-size: 11px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+label {
+  display: block;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 750;
+  line-height: 1.6;
+  margin: 18px 0 9px;
+}
+
+textarea, select, input {
+  display: block;
+  width: 100%;
+  color: var(--navy);
+  background: #FEFDFF;
+  border: 1px solid #C9BDE9;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+textarea { min-height: 190px; resize: vertical; }
+#reviewComment { min-height: 125px; }
+
+textarea::placeholder, input::placeholder { color: #716783; opacity: 1; }
+
+textarea:focus, select:focus, input:focus {
+  border-color: #8068D0;
+  box-shadow: 0 0 0 3px rgba(105,84,184,.12);
+  outline: none;
+}
+
+select option { background: #FFFFFF; color: var(--navy); }
+
+.primary, .secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border-radius: 11px;
+  padding: 13px 18px;
+  min-height: 48px;
+  font-weight: 750;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  transition: background .2s, transform .2s, box-shadow .2s;
+}
+
+.primary {
+  border: 1px solid var(--purple);
+  color: #FFFFFF;
+  background: linear-gradient(100deg, #8068D0, #6954B8);
+  box-shadow: 0 5px 16px rgba(105,84,184,.2);
+}
+
+.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 7px 20px rgba(105,84,184,.28);
+}
+
+.secondary {
+  background: #F5F2FF;
+  color: #443474;
+  border: 1px solid #C9BDE9;
+}
+
+.secondary:hover { background: #ECE6FF; }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.full { width: 100%; margin-top: 15px; }
+
+.result-placeholder {
+  border: 1px dashed #C9BDE9;
+  border-radius: 14px;
+  padding: 28px 18px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  background: #FCFBFF;
+}
+
+.placeholder-icon { font-size: 32px; margin-bottom: 10px; color: #8068D0; }
+
+.alert {
+  padding: 17px;
+  border-radius: 13px;
+  margin-top: 14px;
+  border: 1px solid #E7CF9D;
+  background: #FFFAEF;
+  overflow-wrap: anywhere;
+}
+
+.alert.safe { border-color: #BFE5D3; background: #F2FBF6; }
+
+.alert-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.alert-title {
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+
+.alert-badge {
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 750;
+  line-height: 1.5;
+  white-space: nowrap;
+  border: 1px solid #E0C88E;
+  border-radius: 20px;
+  padding: 6px 9px;
+  background: #FFFDF7;
+}
+
+.safe .alert-badge { color: var(--green); border-color: #BFE5D3; }
+
+.alert p {
+  color: #51476D;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 12px 0;
+}
+
+.suggestion {
+  padding: 14px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.85);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.9;
+  border: 1px solid var(--line);
+}
+
+.suggestion strong {
+  display: block;
+  font-size: 12px;
+  color: var(--purple-dark);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .6px;
+}
+
+.disclaimer {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+  margin-top: 16px;
+}
+
+.section { margin-top: 23px; }
+
+.history-list { margin-top: 15px; }
+
+.history-item {
+  padding: 16px 0;
+  border-top: 1px solid #EDE8F7;
+}
+
+.history-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  margin-bottom: 9px;
+}
+
+.history-text {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.history-comment {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin-top: 8px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.empty-history {
+  color: var(--muted);
+  font-size: 14px;
+  padding: 17px 0;
+  line-height: 1.9;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+  padding: 28px 10px 0;
+}
+
+@media(max-width: 850px) {
+  .hero { grid-template-columns: 1fr; }
+  .workspace { grid-template-columns: 1fr; }
+}
+
+@media(max-width: 520px) {
+  header { padding: 14px; align-items: flex-start; }
+  main { padding: 24px 13px 38px; }
+  .brand { gap: 9px; }
+  .logo { width: 40px; height: 40px; }
+  .brand-name { font-size: 15px; letter-spacing: .7px; }
+  .brand-sub { font-size: 10px; }
+  .header-status { font-size: 11px; padding: 8px 9px; }
+  h1 { font-size: 35px; letter-spacing: -.8px; }
+  .subtitle { font-size: 15px; }
+  .stats { gap: 8px; }
+  .stat { padding: 12px 9px; border-radius: 13px; }
+  .stat-label { font-size: 12px; }
+  .stat-number { font-size: 25px; }
+  .stat-foot { font-size: 10px; }
+  .card { padding: 18px 15px; border-radius: 15px; }
+  .card-heading { align-items: flex-start; }
+  h2 { font-size: 20px; }
+  h3 { font-size: 16px; }
+  .pill { font-size: 10px; padding: 6px 8px; }
+  .description { font-size: 14px; }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .actions button { width: 100%; padding: 12px 8px; font-size: 13px; }
+  .alert-top { flex-wrap: wrap; }
+  .alert-badge { white-space: normal; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">O</div>
+    <div>
+      <div class="brand-name">ON-BRAND AI</div>
+      <div class="brand-sub">CLAIM REVIEW WORKSPACE</div>
+    </div>
+  </div>
+  <div class="header-status">● Demo workspace</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Responsible marketing starts here</div>
+      <h1><span class="gradient-text">Trust every claim.</span><br>Review before you publish.</h1>
+      <p class="subtitle">
+        Check your advertising copy for claims that may need supporting evidence.<br>
+        Spot risky claims and find clearer words to build customer trust
+      </p>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Workspace statistics">
+    <div class="stat">
+      <div class="stat-label">Ads checked</div>
+      <div class="stat-number" id="statChecked">0</div>
+      <div class="stat-foot">In this browser</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Claims flagged</div>
+      <div class="stat-number" id="statFlagged">0</div>
+      <div class="stat-foot">Configured phrase matches</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Reviews saved</div>
+      <div class="stat-number" id="statReviews">0</div>
+      <div class="stat-foot">Demo review records</div>
+    </div>
+  </section>
+
+  <section class="workspace">
+    <div class="card">
+      <div class="card-heading">
+        <h2>Check your advertisement</h2>
+        <span class="pill">01 / ANALYSE</span>
+      </div>
+      <p class="description">Paste your ad below. ON-BRAND AI will highlight configured phrases that may need evidence.</p>
+
+      <label for="content">Your advertising text</label>
+      <textarea id="content" placeholder="Example: We guarantee 100% success for every customer!"></textarea>
+
+      <div class="actions">
+        <button class="primary" id="checkButton">✦ Check My Ad</button>
+        <button class="secondary" id="clearButton">Clear text</button>
+      </div>
+
+      <div class="section">
+        <div class="card-heading">
+          <h3>✦ Claim alerts</h3>
+          <span class="pill" id="alertCount">Waiting for check</span>
+        </div>
+        <p class="description">Each alert explains the possible concern and offers wording to consider.</p>
+
+        <div id="results" aria-live="polite">
+          <div class="result-placeholder">
+            <div class="placeholder-icon">⌕</div>
+            Your results will appear here.<br>Enter an advertisement and select Check My Ad.
+          </div>
+        </div>
+
+        <p class="disclaimer">Important: this demo uses phrase matching, not independent fact-checking. A flagged phrase is not proof that a claim is false, and no alert does not mean an ad is accurate or compliant. Verify evidence and applicable rules with a qualified human reviewer.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-heading">
+        <h2>✦ Human review</h2>
+        <span class="pill">02 / REVIEW</span>
+      </div>
+      <p class="description">Record a review decision for the most recently checked advertisement. Saving here stores a demo record in this browser only.</p>
+
+      <label for="reviewStatus">Reviewer decision</label>
+      <select id="reviewStatus">
+        <option value="Needs more evidence">Needs more evidence</option>
+        <option value="Changes requested">Changes requested</option>
+        <option value="Approved by reviewer">Approved by reviewer</option>
+      </select>
+
+      <label for="reviewComment">Reviewer comment</label>
+      <textarea id="reviewComment" placeholder="Explain what evidence is needed or what was reviewed..."></textarea>
+
+      <button class="primary full" id="saveReview">Save Demo Review</button>
+      <p class="disclaimer">An “approved” status is only a recorded demo decision. It does not verify the claim or provide legal approval.</p>
+
+      <div class="section">
+        <div class="card-heading">
+          <h2>✦ Review history</h2>
+          <span class="pill">LOCAL RECORDS</span>
+        </div>
+        <div id="history" class="history-list">
+          <div class="empty-history">Your saved review records will appear here.</div>
+        </div>
+        <button class="secondary full" id="clearHistory">Clear review history</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    ON-BRAND AI<br>
+    A prototype to support evidence-aware marketing review. Human judgement remains essential.
+  </footer>
+</main>
+
+<script>
+const rules = [
+  {
+    phrase: "100%",
+    title: "Absolute result claim",
+    reason: "A claim such as 100% success can imply that the result is certain for everyone. Strong, relevant evidence and clear context may be needed.",
+    suggestion: "Describe the specific, measurable result that your evidence supports. Avoid implying that every customer will achieve the same outcome."
+  },
+  {
+    phrase: "guaranteed",
+    title: "Guarantee language",
+    reason: "A guarantee can create a strong promise. The actual conditions, limitations, and supporting evidence may not be clear.",
+    suggestion: "State exactly what you offer and explain any conditions. Only make a guarantee you can genuinely honour."
+  },
+  {
+    phrase: "guarantee",
+    title: "Guarantee language",
+    reason: "Guarantee language can create a strong promise. The actual conditions, limitations, and supporting evidence may not be clear.",
+    suggestion: "State exactly what you offer and explain any conditions. Only make a guarantee you can genuinely honour."
+  },
+  {
+    phrase: "no.1",
+    title: "Ranking claim",
+    reason: "A number-one claim may depend on a source, comparison group, location, and date.",
+    suggestion: "Name the source and relevant date for a supported ranking, or describe a specific product feature instead."
+  },
+  {
+    phrase: "number one",
+    title: "Ranking claim",
+    reason: "A number-one claim may depend on a source, comparison group, location, and date.",
+    suggestion: "Name the source and relevant date for a supported ranking, or describe a specific product feature instead."
+  },
+  {
+    phrase: "best",
+    title: "Broad superiority claim",
+    reason: "“Best” is a broad claim and may imply superiority without saying how products were compared.",
+    suggestion: "Describe a specific, verifiable benefit instead of making an unsupported comparison."
+  },
+  {
+    phrase: "risk-free",
+    title: "Absolute risk claim",
+    reason: "“Risk-free” can suggest there are no risks or limitations when that may not be true.",
+    suggestion: "Explain the relevant limitations, conditions, and safeguards clearly instead of promising zero risk."
+  }
+];
+
+const $ = id => document.getElementById(id);
+let latestText = "";
+let latestFindings = [];
+
+function getRecords(key) {
+  try {
+    const value = JSON.parse(localStorage.getItem(key) || "[]");
+    return Array.isArray(value) ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+function setRecords(key, records) {
+  try {
+    localStorage.setItem(key, JSON.stringify(records));
+    return true;
+  } catch {
+    alert("Your browser could not save this demo record. Check your browser storage settings.");
+    return false;
+  }
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[char]);
+}
+
+function refreshStats() {
+  const checks = getRecords("onbrandChecks");
+  const reviews = getRecords("onbrandReviews");
+  $("statChecked").textContent = checks.length;
+  $("statFlagged").textContent = checks.reduce((sum, item) => sum + item.flagged, 0);
+  $("statReviews").textContent = reviews.length;
+}
+
+ async function checkContent() {
+  const text = $("content").value.trim();
+
+  if (!text) {
+    alert("Please paste your advertisement first.");
+    $("content").focus();
+    return;
+  }
+
+  latestText = text;
+
+try {
+  const response = await fetch("http://127.0.0.1:8000/analyze", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ text: text })
+  });
+
+  if (!response.ok) {
+    throw new Error("Backend request failed");
+  }
+
+  const data = await response.json();
+
+  latestFindings = data.findings.map(item => {
+    const rule = rules.find(r => r.phrase === item.claim);
+    return rule || {
+      phrase: item.claim,
+      title: "Claim to review",
+      reason: item.reason,
+      suggestion: "Check reliable evidence and ask a human reviewer to assess this claim."
+    };
+  });
+} catch (error) {
+  alert("Could not connect to the backend. Make sure the ON-BRAND AI server is running.");
+  return;
+}
+
+  const checks = getRecords("onbrandChecks");
+  checks.push({
+    date: new Date().toISOString(),
+    flagged: latestFindings.length
+  });
+
+  if (!setRecords("onbrandChecks", checks.slice(-200))) return;
+
+  $("alertCount").textContent = latestFindings.length + " phrase match" +
+    (latestFindings.length === 1 ? "" : "es");
+
+  if (latestFindings.length === 0) {
+    $("results").innerHTML = `
+      <div class="alert safe">
+        <div class="alert-top">
+          <div class="alert-title">No configured phrases detected</div>
+          <span class="alert-badge">No match</span>
+        </div>
+        <p>This demo did not find any of its configured phrases. That does not establish that the advertisement is accurate, supported by evidence, or compliant.</p>
+        <div class="suggestion">
+          <strong>Suggested next step</strong>
+          Review factual claims, comparisons, testimonials, and supporting evidence with a human reviewer.
+        </div>
+      </div>`;
+  } else {
+    $("results").innerHTML = latestFindings.map(item => `
+      <div class="alert">
+        <div class="alert-top">
+          <div class="alert-title">Flagged phrase (claim to review): "${escapeHTML(item.phrase)}"</div>
+          <span class="alert-badge">Review needed</span>
+        </div>
+        <p><strong>${escapeHTML(item.title)}</strong><br>${escapeHTML(item.reason)}</p>
+        <div class="suggestion">
+          <strong>Safer wording to consider</strong>
+          ${escapeHTML(item.suggestion)}
+        </div>
+        <p>Evidence status: Not verified by this demo. Human review required.</p>
+      </div>`).join("");
+  }
+
+  refreshStats();
+}
+
+function renderHistory() {
+  const reviews = getRecords("onbrandReviews").slice().reverse();
+
+  if (!reviews.length) {
+    $("history").innerHTML = '<div class="empty-history">No reviews saved yet. Your saved demo reviews will appear here.</div>';
+    refreshStats();
+    return;
+  }
+
+  $("history").innerHTML = reviews.map(item => `
+    <div class="history-item">
+      <div class="history-meta">
+        <span>${escapeHTML(new Date(item.date).toLocaleString())}</span>
+        <span>${escapeHTML(item.status)}</span>
+      </div>
+      <div class="history-text">${escapeHTML(item.text)}</div>
+      <div class="history-comment">${escapeHTML(item.comment || "No reviewer comment entered.")}</div>
+    </div>`).join("");
+  
+  refreshStats();
+  }
+
+$("checkButton").addEventListener("click", checkContent);
+
+$("clearButton").addEventListener("click", () => {
+  $("content").value = "";
+  $("results").innerHTML = `
+    <div class="result-placeholder">
+      <div class="placeholder-icon">⌕</div>
+      Your results will appear here.<br>Enter an advertisement and select Check My Ad.
+    </div>`;
+  $("alertCount").textContent = "Waiting for check";
+  latestText = "";
+  latestFindings = [];
+});
+
+$("saveReview").addEventListener("click", () => {
+  if (!latestText) {
+    alert("First check an advertisement. Then you can save its review.");
+    return;
+  }
+
+  const reviews = getRecords("onbrandReviews");
+  reviews.push({
+    date: new Date().toISOString(),
+    text: latestText,
+    status: $("reviewStatus").value,
+    comment: $("reviewComment").value.trim(),
+    flagged: latestFindings.length
+  });
+
+  if (setRecords("onbrandReviews", reviews.slice(-100))) {
+    $("reviewComment").value = "";
+    renderHistory();
+    alert("Demo review saved in this browser on this device.");
+  }
+});
+$("clearHistory").addEventListener("click", () => {
+  if (!confirm("Clear all saved demo review records in this browser? This cannot be undone.")) {
+    return;
+  }
+  try {
+    localStorage.removeItem("onbrandReviews");
+    renderHistory();
+  } catch {
+    alert("The browser could not clear the review history.");
+  }
+});
+
+renderHistory();
+refreshStats();
+</script>
+</body>
+</html>
+
+
+
