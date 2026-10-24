@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
 app = FastAPI(title="ON-BRAND AI")
 app.add_middleware(
     CORSMiddleware,
@@ -13,7 +17,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return FileResponse("index.html")
+    return FileResponse(BASE_DIR / "index.html")
 
 
 @app.get("/health")
