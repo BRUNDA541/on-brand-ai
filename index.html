@@ -436,6 +436,76 @@ footer {
   .actions button { width: 100%; padding: 12px 8px; font-size: 13px; }
   .alert-top { flex-wrap: wrap; }
   .alert-badge { white-space: normal; }
+  /* ON-BRAND AI — elegant visual upgrade */
+body {
+  background: linear-gradient(135deg, #f4f7ff, #eef8ff, #f8faff);
+  color: #172554;
+  line-height: 1.6;
+}
+
+header {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid #dbeafe;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.06);
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid #dbeafe;
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 10px 30px rgba(30, 64, 175, 0.07);
+}
+
+textarea,
+input,
+select {
+  border: 1px solid #d6e3fa;
+  border-radius: 12px;
+  padding: 13px 15px;
+  background: #ffffff;
+}
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  resize: vertical;
+}
+
+button {
+  border-radius: 12px;
+  padding: 12px 18px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.15);
+}
+
+button.primary {
+  background: linear-gradient(135deg, #4776f5, #315de8);
+  color: white;
+  border: none;
+}
+
+footer {
+  text-align: center;
+  color: #64748b;
+  padding: 24px 12px;
+}
+
+@media (max-width: 600px) {
+  .card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  header {
+    flex-wrap: wrap;
+  }
+}
 }
 </style>
 </head>
