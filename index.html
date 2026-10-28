@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -491,6 +492,14 @@ footer {
 
       <label for="content">Your advertising text</label>
       <textarea id="content" placeholder="Example: We guarantee 100% success for every customer!"></textarea>
+      <div class="ocr-section">
+  <label for="adImage">Or upload an advertisement image</label>
+  <input type="file" id="adImage" accept="image/*">
+  <button type="button" id="extractTextButton">
+    Extract Text from Image
+  </button>
+  <p id="ocrStatus" aria-live="polite"></p>
+</div>
 
       <div class="actions">
         <button class="primary" id="checkButton">✦ Check My Ad</button>
@@ -795,6 +804,50 @@ $("clearHistory").addEventListener("click", () => {
 
 renderHistory();
 refreshStats();
+const adImageInput = document.getElementById("adImage");
+const extractTextButton = document.getElementById("extractTextButton");
+const ocrStatus = document.getElementById("ocrStatus");
+
+extractTextButton.addEventListener("click", async () => {
+  const file = adImageInput.files[0];
+
+  if (!file) {
+    ocrStatus.textContent = "Please select an advertisement image first.";
+    return;
+  }
+
+  if (!file.type.startsWith("image/")) {
+    ocrStatus.textContent = "Please select a valid image file.";
+    return;
+  }
+
+  if (!window.Tesseract) {
+    ocrStatus.textContent = "OCR library could not load. Check your internet connection and refresh.";
+    return;
+  }
+
+  extractTextButton.disabled = true;
+  ocrStatus.textContent = "Extracting text from your image... Please wait.";
+
+  try {
+    const result = await Tesseract.recognize(file, "eng");
+    const extractedText = result.data.text.trim();
+
+    if (!extractedText) {
+      ocrStatus.textContent = "No readable text found. Try a clearer image.";
+      return;
+    }
+
+    document.getElementById("content").value = extractedText;
+    ocrStatus.textContent =
+      "Text extracted successfully! Review it, then click Check My Ad.";
+  } catch (error) {
+    console.error("OCR error:", error);
+    ocrStatus.textContent = "Text extraction failed. Please try another image.";
+  } finally {
+    extractTextButton.disabled = false;
+  }
+});
 </script>
 </body>
 </html>
