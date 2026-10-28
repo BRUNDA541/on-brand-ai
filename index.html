@@ -832,11 +832,29 @@ extractTextButton.addEventListener("click", async () => {
   try {
     const result = await Tesseract.recognize(file, "eng");
     const extractedText = result.data.text.trim();
+    const confidence = result.data.confidence ?? 0;
+const meaningfulCharacters = (extractedText.match(/[a-zA-Z0-9]/g) || []).length;
+const meaningfulRatio =
+  meaningfulCharacters / Math.max(extractedText.length, 1);
 
-    if (!extractedText) {
-      ocrStatus.textContent = "No readable text found. Try a clearer image.";
-      return;
-    }
+if (
+  !extractedText ||
+  extractedText.length < 3 ||
+  confidence < 35 ||
+  meaningfulRatio < 0.5
+) {
+  document.getElementById("content").value = "";
+  ocrStatus.textContent =
+    "No readable advertisement text found. Please upload a clearer image.";
+  return;
+}
+
+    if (!extractedText || extractedText.trim().length < 2) {
+  document.getElementById("content").value = "";
+  ocrStatus.textContent =
+    "No readable text found. Please upload a clearer advertisement image.";
+  return;
+}
 
     document.getElementById("content").value = extractedText;
     ocrStatus.textContent =
