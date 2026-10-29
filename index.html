@@ -507,6 +507,45 @@ footer {
   }
 }
 }
+/* Improve visibility of the two OCR controls only */
+.ocr-section input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #B6A5F5;
+  border-radius: 12px;
+  background: #F5F2FF;
+  color: #30264F;
+}
+
+.ocr-section input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 10px 14px;
+  border: 1px solid #6954B8;
+  border-radius: 8px;
+  background: #6954B8;
+  color: #FFFFFF;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ocr-section input[type="file"]::file-selector-button:hover {
+  background: #443474;
+}
+
+#extractTextButton {
+  margin-top: 10px;
+  border: 1px solid #514280;
+  border-radius: 11px;
+  background: #56448a;
+  color: #FFFFFF;
+  font-weight: 750;
+  box-shadow: 0 4px 12px rgba(68, 52, 116, 0.18);
+}
+
+#extractTextButton:hover {
+  background: #6954B8;
+}
 </style>
 </head>
 
