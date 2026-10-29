@@ -771,7 +771,11 @@ function refreshStats() {
   latestText = text;
 
 try {
-  const response = await fetch("https://on-brand-ai.onrender.com/analyze", {
+  const API_BASE = ["localhost", "127.0.0.1"].includes(location.hostname)
+  ? "http://127.0.0.1:8000"
+  : "https://on-brand-ai.onrender.com";
+
+const response = await fetch(`${API_BASE}/analyze`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -786,16 +790,21 @@ try {
   const data = await response.json();
 
   latestFindings = data.findings.map(item => {
-    const rule = rules.find(r => r.phrase === item.claim);
-    return rule || {
+  const rule = rules.find(r => r.phrase === item.claim);
+
+  return {
+    ...(rule || {
       phrase: item.claim,
       title: "Claim to review",
       reason: item.reason,
       suggestion: "Check reliable evidence and ask a human reviewer to assess this claim."
-    };
-  });
+    }),
+    sourceLinks: item.source_links || []
+  };
+});
 } catch (error) {
-  alert("Could not connect to the backend. Make sure the ON-BRAND AI server is running.");
+  console.error("ON-BRAND AI analysis error:", error);
+  alert("Analysis error: " + error.message);
   return;
 }
 
@@ -835,7 +844,24 @@ try {
           <strong>Safer wording to consider</strong>
           ${escapeHTML(item.suggestion)}
         </div>
-        <p>Evidence status: Not verified by this demo. Human review required.</p>
+        <p>
+  <strong>Evidence status:</strong>
+  ${escapeHTML(item.evidenceStatus || "Needs human verification")}
+</p>
+
+<div class="suggestion">
+  <strong>Evidence needed</strong>
+  <p>${escapeHTML(item.evidenceNeeded || "A human reviewer should check the supporting evidence.")}</p>
+</div>
+
+<div class="suggestion">
+  <strong>Resources and research links</strong>
+  ${(item.sourceLinks || []).map(source =>
+    '<p><a href="' + escapeHTML(source.url) +
+    '" target="_blank" rel="noopener noreferrer">' +
+    escapeHTML(source.name) + '</a></p>'
+  ).join("")}
+</div>
       </div>`).join("");
   }
 
