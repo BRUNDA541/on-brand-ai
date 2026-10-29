@@ -39,9 +39,12 @@ class AdRequest(BaseModel):
 SOURCES = {
     "advertising": {
         "name": "Advertising Standards Council of India",
-        "url": "https://www.ascionline.in/"
+        "url": "https://consumeraffairs.gov.in/"
     },
-    "consumer_protection": {"name": "Department of Consumer Affairs", "url": "https://consumeraffairs.gov.in/"},
+    "consumer_protection": {
+        "name": "Department of Consumer Affairs",
+        "url": "https://consumeraffairs.nic.in/"
+    },
     "food": {
         "name": "Food Safety and Standards Authority of India",
         "url": "https://www.fssai.gov.in/"

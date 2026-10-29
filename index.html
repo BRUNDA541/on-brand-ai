@@ -793,12 +793,15 @@ const response = await fetch(`${API_BASE}/analyze`, {
   const rule = rules.find(r => r.phrase === item.claim);
 
   return {
-    ...(rule || {
-      phrase: item.claim,
-      title: "Claim to review",
-      reason: item.reason,
-      suggestion: "Check reliable evidence and ask a human reviewer to assess this claim."
-    }),
+    ...(rule || {}),
+    phrase: item.claim,
+    title: item.category || (rule && rule.title) || "Claim to review",
+    reason: item.reason || (rule && rule.reason) || "",
+    suggestion:
+      item.evidence_needed ||
+      (rule && rule.suggestion) ||
+      "Check reliable evidence and ask a human reviewer to assess this claim.",
+    evidenceStatus: item.evidence_status || "Needs human verification",
     sourceLinks: item.source_links || []
   };
 });
