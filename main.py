@@ -223,9 +223,9 @@ def analyze_ad(request: AdRequest):
 
     for rule in RISKY_CLAIMS:
         matched_phrases = [
-            phrase for phrase in rule["phrases"]
-            if phrase in text_lower
-        ]
+    phrase for phrase in rule["phrases"]
+    if phrase.lower() in text_lower
+]
 
         if matched_phrases:
             findings.append({
