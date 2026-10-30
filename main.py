@@ -144,7 +144,7 @@ RISKY_CLAIMS = [
     "source_keys": ["advertising", "consumer_protection"]
 },
 {
-    "phrases": ["limited seats", "limited spots", "limited slots", "few seats left", "only a few seats","limited seats only"],
+    "phrases": ["limited seats", "limited spots", "limited slots", "few seats left", "only a few seats","limited seates only"],
     "category": "Scarcity and Availability Claims",
     "reason": "Limited availability messaging may create false urgency if the stated capacity restriction is not genuine.",
     "evidence_needed": (
