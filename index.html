@@ -648,8 +648,8 @@ footer {
       </select>
 
       <label for="reviewComment">Reviewer comment</label>
-      <textarea id="reviewComment" placeholder="Explain what evidence is needed or what was reviewed..."></textarea>
-
+      <textarea id="reviewComment" required
+  placeholder="Explain what evidence is needed or what was reviewed..."></textarea>
       <button class="primary full" id="saveReview">Save Demo Review</button>
       <p class="disclaimer">An “approved” status is only a recorded demo decision. It does not verify the claim or provide legal approval.</p>
 
@@ -993,6 +993,20 @@ $("clearButton").addEventListener("click", () => {
   latestText = "";
   latestFindings = [];
 });
+$("clearHistory").addEventListener("click", () => {
+  if (!confirm("Clear all saved demo review records in this browser? This cannot be undone.")) {
+    return;
+  }
+
+  try {
+    localStorage.removeItem("onbrandReviews");
+    renderHistory();
+    alert("Review history cleared successfully.");
+  } catch (error) {
+    console.error("Clear history error:", error);
+    alert("The browser could not clear the review history.");
+  }
+});
 
 $("saveReview").addEventListener("click", () => {
   if (!latestText) {
@@ -1000,30 +1014,39 @@ $("saveReview").addEventListener("click", () => {
     return;
   }
 
-  const reviews = getRecords("onbrandReviews");
-  reviews.push({
-    date: new Date().toISOString(),
-    text: latestText,
-    status: $("reviewStatus").value,
-    comment: $("reviewComment").value.trim(),
-    flagged: latestFindings.length
-  });
+  const comment = $("reviewComment").value.trim();
 
-  if (setRecords("onbrandReviews", reviews.slice(-100))) {
-    $("reviewComment").value = "";
-    renderHistory();
-    alert("Demo review saved in this browser on this device.");
-  }
-});
-$("clearHistory").addEventListener("click", () => {
-  if (!confirm("Clear all saved demo review records in this browser? This cannot be undone.")) {
+  if (!comment) {
+    alert("Please enter a reviewer comment before saving.");
+    $("reviewComment").focus();
     return;
   }
+
+  const saveButton = $("saveReview");
+
+  if (saveButton.disabled) return;
+
+  saveButton.disabled = true;
+
   try {
-    localStorage.removeItem("onbrandReviews");
-    renderHistory();
-  } catch {
-    alert("The browser could not clear the review history.");
+    const reviews = getRecords("onbrandReviews");
+
+    reviews.push({
+      id: crypto.randomUUID(),
+      date: new Date().toISOString(),
+      text: latestText,
+      status: $("reviewStatus").value,
+      comment: comment,
+      flagged: latestFindings.length
+    });
+
+    if (setRecords("onbrandReviews", reviews.slice(-100))) {
+      $("reviewComment").value = "";
+      renderHistory();
+      alert("Review saved successfully in this browser.");
+    }
+  } finally {
+    saveButton.disabled = false;
   }
 });
 
