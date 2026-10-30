@@ -185,4 +185,4 @@ https://github.com/BRUNDA541/on-brand-ai
 
 Disclaimer
 
-ON-BRAND AI is a prototype intended to support responsible advertising review. It does not replace evidence verification, qualified human judgement, or legal advice.
+ON-BRAND AI is intended to support responsible advertising review. It does not replace evidence verification, qualified human judgement, or legal advice.
