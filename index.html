@@ -1056,7 +1056,7 @@ extractTextButton.addEventListener("click", async () => {
 
   try {
     const result = await Tesseract.recognize(file, "eng");
-    const extractedText = result.data.text.trim();
+    const extractedText = result.data.text.trim().toLowerCase();
     const confidence = result.data.confidence ?? 0;
 const meaningfulCharacters = (extractedText.match(/[a-zA-Z0-9]/g) || []).length;
 const meaningfulRatio =
